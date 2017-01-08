@@ -24,11 +24,48 @@ here is what i hope to gain through the challenge
     i will use `postcss` for my blog style
 
 -   step \#4: start learning trio `typescript+react+redux` through `egghead.io`
-
 -   step \#5 and final: build a website using everything i would have learned through challenge
 
 my logs
 =======
+
+day \#2: 08/01/2017
+-------------------
+
+**what i have done?**
+
+-   `.pdf` file can be viewed in `emacs 25` for my windows 10, feel much more productive!
+-   \[x\] chapter 2 of `haskell book`
+-   \[x\] chapter 3 of `haskell book`
+
+**lesson learned?**
+
+-   `haskell` is non-strict (lazy) evaluation, means that not everything will get reduce to its irreducible form immediately
+-   *redex*: a reducible expression
+-   *infix* and *prefix* operator
+
+    -   `haskell` function has prefix syntax as default
+    -   arithematic operators has infix syntax: `(+)`, `(-)`, `(*)`, `(/)`
+    -   user \`:info\` to find information whether an operator is infix and its associativity and precedence
+    -   the higher precedence (0-9) will be applied first
+    -   there are *left* and *right* associative
+
+-   function application operator `$`
+
+    -   is right associative
+    -   very useful when you want to reduce/eliminate pairs of parentheses
+    -   easier to read code syntax
+
+-   `haskell` use **indentation** to define block of code expressions
+-   *syntactic sugar* is syntax designed to make expression easier to read or write (ex. `let..in`, `where`)
+-   when you write code in a source file, the order is unimportant, but when writing code directly into `REPL`, the order does matter
+-   `main :: IO ()` is not only function but a series of instructions to execute, which can include applying functions and producing **side-effects** such as printing to the screen.
+-   top-level vs local definition
+
+    -   `let` and `when` introduce local scope
+
+-   type signature `::`
+-   `string` type and concatenation and list functions: `++`, `concat`, `take`, `drop`...
 
 day \#1: 07/01/2017
 -------------------
@@ -38,27 +75,19 @@ day \#1: 07/01/2017
 -   set up my workflow for the challenge
 
     -   set up `emacs` workspace and packages
-
     -   initiate the blog using `hakyll`
 
--   finished chapter 1 of `haskell book`
+-   \[x\] chapter 1 of `haskell book`
 
     -   no coding task in this chapter
-
     -   learned about lambda/abstraction function terms
 
         -   lambda structure: head and body
-
         -   *alpha equivalence*
-
         -   *beta reduction*
-
         -   free variable
-
         -   multiple argument
-
         -   *combinator*: a lambda with no free variables
-
         -   *divergence* or *omega*: reduction process never terminates or end (infinite loop)
 
     -   completed chapter 1 exercises
@@ -66,7 +95,4 @@ day \#1: 07/01/2017
 **lesson learned?**
 
 -   to tame `spacemacs` layout and workspace
-
 -   to have the foundation of `haskell` lambda/function.
-
-
