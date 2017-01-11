@@ -41,6 +41,41 @@ here is what i hope to gain through the challenge
 
 # my logs
 
+## day \#5: 11/01/2017
+
+**what i have done?**
+
+- [x] get my head round `function type constructor`
+- [x] review chapter 6 of `haskell book`
+- [x] chapter 7 of `haskell book` plus exercises
+
+**lesson learned?**
+
+- `function type constructor` just like other `datatypes` but also take
+  `datatypes` as its argument
+- unlike function application which is _left associative_, function type is _right associative_
+- `newtype` keyword is a special case of `data` declaration, it only allows 1
+  constructor and 1 field
+- `pattern matching`: is quite similar to _function overloading_ and `if..then..else` but more powerful
+
+  + underscore `_` act like *catch them all* expression
+  + used to vary what function do given different input
+  + **unpack** and **expose** the content of `datatypes`
+
+- `case..of..where` expression
+- `guards` is more like `if..then..else` expression
+- higher  order function is function that accept function as argument
+
+  + function composition `(.)`: `f(x) . g(x) = f(g(x))`
+  + function composition is right associative
+  + function application has higher precedence than composition operator `(.)`
+
+- the combination of `(.)` and `($)` operators make `haskell` syntax look much
+  more beautiful, easier to read and _parentheses free_, help you focus on the
+  problem rather than the syntax
+
+  + `a . b . c $ x` vs. (a (b (c x)))
+
 ## day \#4: 10/01/2017
 
 **what i have done?**
@@ -58,6 +93,8 @@ here is what i hope to gain through the challenge
 
   + while function application is _left associative_, `function type` is _right
     associative_
+  + rule of thumb: _left associative_ will apply the **leftmost** first, _right
+    associative_ will apply the **rightmost** first
 
 - `typeclasses` definition with `Eq`, `Num`, `Ord`, `Show` examples
 - `typeclass` inheritance is when a `typeclass` has a superclass (class
@@ -74,11 +111,11 @@ here is what i hope to gain through the challenge
 
 - [x] review some `prelude` commands/functions
 
-    + quit `ghci`: `:q` or `:quit`
-    + unload module: `:m`
-    + load file: `:l` or `:load`
-    + information: `:info` or `:i`
-    + type of: `:t` or `:type`
+  + quit `ghci`: `:q` or `:quit`
+  + unload module: `:m`
+  + load file: `:l` or `:load`
+  + information: `:info` or `:i`
+  + type of: `:t` or `:type`
 
 - [x] chapter 4 of `haskell book` plus exercises
 - [x] chapter 5 of `haskell book` plus exercises
@@ -87,11 +124,11 @@ here is what i hope to gain through the challenge
 
 - i see some similarities between `haskell` data type and `typescript`
 
-    + `datatype` vs. `typescript union`
-    + `type constructor`, `data constructor` vs. `typescript interface`
-    + `typeclass` vs. `typescript interface implement`
-    + `type variables` vs. `typescript generic`
-    + both have _type alias_
+  + `datatype` vs. `typescript union`
+  + `type constructor`, `data constructor` vs. `typescript interface`
+  + `typeclass` vs. `typescript interface implement`
+  + `type variables` vs. `typescript generic`
+  + both have _type alias_
 
 - predefined datatypes: `Int`, `Double`, `"String"`, `(Tuple)`, `[List]`
 - conditional flow control with `if-then-else`
@@ -103,23 +140,24 @@ here is what i hope to gain through the challenge
   signatures, and used to denote `type constructor` (e.g `function type (->)`)
 - `function type (->)`
 
-    + take arguments (`type variables`) **but** has no data constructor: `data
-      (->) a b`
-    + is right associative
-    + is _curried_ by default (or _partial application_): many functions, but
-      each only take 1 argument
-    + could be _uncurried_ (one function, many arguments): `(a, a) -> a` instead
-      of `a -> a -> a`
+  + take arguments (`type variables`) **but** has no data constructor: `data
+    (->) a b`
+  + is right associative
+  + is _curried_ by default (or _partial application_): many functions, but
+    each only take 1 argument
+  + could be _uncurried_ (one function, many arguments): `(a, a) -> a` instead
+    of `a -> a -> a`
 
 - type signatures may have three different types: _concrete_, _constrained_, and
   _parametric polymorphism_
 - _polymorphism_
 
-    + _constrained or ad-hoc polymorphism_: is defined in similar to
-      `typeclass`: `(+) :: Num a => a -> a -> a`
-    + _parametric polymorphism_: refer to type variables that are **fully**
-      polymorphic, not constrained by `typeclass` and could be **anything**: `id
-      :: a -> a`
+  + _constrained or ad-hoc polymorphism_: is defined in similar to
+    `typeclass`: `(+) :: Num a => a -> a -> a`
+  + _parametric polymorphism_: refer to type variables that are **fully**
+    polymorphic, not constrained by `typeclass` and could be **anything**: `id
+    :: a -> a`
+
 - if a variable could be anything (_parametric polymorphic_), it has no method
 - if it can be some types (_typeclass instance), it has some methods
 - if it is a concrete type, it lose the flexibility but gain more potential
@@ -141,18 +179,18 @@ here is what i hope to gain through the challenge
 - *redex*: a reducible expression
 - *infix* and *prefix* operator
 
-    + `haskell` function has prefix syntax as default
-    + arithematic operators has infix syntax: `(+)`, `(-)`, `(*)`, `(/)`
-    + user \`:info\` to find information whether an operator is infix and its
-      associativity and precedence
-    + the higher precedence (0-9) will be applied first
-    + there are *left* and *right* associative
+  + `haskell` function has prefix syntax as default
+  + arithematic operators has infix syntax: `(+)`, `(-)`, `(*)`, `(/)`
+  + user \`:info\` to find information whether an operator is infix and its
+    associativity and precedence
+  + the higher precedence (0-9) will be applied first
+  + there are *left* and *right* associative
 
 - function application operator `$`
 
-    + is right associative
-    + very useful when you want to reduce/eliminate pairs of parentheses
-    + easier to read code syntax
+  + is right associative
+  + very useful when you want to reduce/eliminate pairs of parentheses
+  + easier to read code syntax
 
 - `haskell` use **indentation** to define block of code expressions
 - *syntactic sugar* is syntax designed to make expression easier to read or
@@ -164,7 +202,7 @@ here is what i hope to gain through the challenge
   printing to the screen.
 - top-level vs local definition
 
-    + `let` and `when` introduce local scope
+  + `let` and `when` introduce local scope
 
 - type signature `::`
 - `string` type and concatenation and list functions: `++`, `concat`, `take`,
@@ -176,24 +214,24 @@ here is what i hope to gain through the challenge
 
 - [x] set up my workflow for the challenge
 
-    + set up `emacs` workspace and packages
-    + initiate the blog using `hakyll`
+  + set up `emacs` workspace and packages
+  + initiate the blog using `hakyll`
 
 - [x] chapter 1 of `haskell book`
 
-    + no coding task in this chapter
-    + learned about lambda/abstraction function terms
+  + no coding task in this chapter
+  + learned about lambda/abstraction function terms
 
-        * lambda structure: head and body
-        * *alpha equivalence*
-        * *beta reduction*
-        * free variable
-        * multiple argument
-        * *combinator*: a lambda with no free variables
-        * *divergence* or *omega*: reduction process never terminates or end
-          (infinite loop)
+    * lambda structure: head and body
+    * *alpha equivalence*
+    * *beta reduction*
+    * free variable
+    * multiple argument
+    * *combinator*: a lambda with no free variables
+    * *divergence* or *omega*: reduction process never terminates or end
+      (infinite loop)
 
-    + completed chapter 1 exercises
+  + completed chapter 1 exercises
 
 **lesson learned?**
 
