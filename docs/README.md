@@ -41,6 +41,153 @@ here is what i hope to gain through the challenge
 
 # my logs
 
+## day \#6: 12/01/2017
+
+**what i have done?**
+
+- [x] watch `egghead.io`
+- [x] review chapter 7 of `haskell book`
+- [x] chapter 8 of `haskell book`
+- [ ] almost finished chapter 9 of `haskell book`
+
+**lesson learned?**
+
+- recursion is self-referential composition, apply a function to an argument,
+  then pass that result on as an argument to a seconds application of the same
+  function and so on.
+- composition function `(.) f g = \x -> f (g x)` is quite similar to recursive
+  functions, the difference is that instead of a fixed number of applications,
+  recursive functions rely on inputs to determine when to stop applying
+  functions to successive results. without a `base` case, the result
+  of `(g x)` will keep being passed back to `g` indefinitely
+- understood why the author name his section as _have fun with bottom_, yes,
+  i crashed my windows by passing `let x = x in x` expression in `prelude`
+- a _partial function_ is one which doesn't handle all of its input
+- a _full function_ is one which handles all of its input
+- type synonyms/alias `type` improve the readability of type signature `type AccountName
+  = Integer`
+- _haskell idiom_: use generic name `go` as a helper function which could be
+  defined in `where` clause for a recursive loop/function
+
+  ```haskell
+  dividedBy :: Integral a => a -> a -> (a, a)
+  dividedBy num denom = go num denom 0
+    where go n d count
+           | n < d = (count ,n)
+           | otherwise = go (n - d) d (count + 1)
+  ```
+
+- a _sum type_ can be read as an `or |` as in `Bool` datatype, a _product type_
+  can be read asn an `and &`
+- working with `list`
+
+  ```haskell
+  -- list is a recursive data structure
+  data [] a = [] | a : [] -- am i watching `inception` movie here?
+  ```
+
+  + pattern matching on `list`
+
+  ```haskell
+  safeTail :: [a] -> Maybe [a]
+  safeTail []     = Nothing
+  safeTail (x:[]) = Nothing
+  safeTail (_:xs) = Just xs
+  ```
+
+  + list syntactic sugar
+
+  ```haskell
+  -- parentheses syntax
+  (1 : 2 : 3 : []) ++ 4 : []
+
+  -- syntactic sugar syntax
+  [1, 2, 3] ++ [4]
+  ```
+
+  + constructing list
+
+  ```haskell
+  -- using ranges
+  [1..10]
+  enumFromTo 1 10
+
+  [1, 2..10]
+  enumFromThenTo 1 2 10
+
+  [1, 3..10]
+  enumFromThenTo 1 3 10
+  ```
+
+  + extracting list element
+
+  ```haskell
+  take 7 [1..10]
+  -- [1, 2, 3, 4, 5, 6, 7]
+
+  drop 7 [1..10]
+  -- [8, 9, 10]
+
+  splitAt 5 [1..10]
+  -- ([1, 2, 3, 4, 5], [6, 7, 8, 9, 10])
+
+  takeWhile (< 5) [1..10]
+  -- [1, 2, 3, 4]
+
+  dropWhile (< 5) [1..10]
+  -- [5, 6, 7, 8, 9, 10]
+  ```
+
+  + list comprehensions
+
+  ```haskell
+  -- basic comprehension syntax
+  [ x * 2 | x <- [1..5]]
+  -- [2, 4, 6, 8, 10]
+
+  -- comprehension with predicate
+  [ x* 2 | x <- [1..5], x < 3 ]
+  -- [2, 4]
+
+  -- comprehension with multiple list generator
+  [ x + y | x <- [1..5], y <- [1..3]]
+  -- [2, 3, 4, 3, 4, 5, 4, 5, 6, 5, 6, 7, 6, 7, 8]
+
+  -- comprehension with multiple list generator plus predicate
+  [ x + y | x <- [1..5], y <- [1..3], x < 3, y > 1]
+  -- [3, 4, 4, 5]
+
+  -- comprehension with list of string
+  [x | x <- "Three Letter Acronym", elem x ['A'..'Z']]
+  -- TLA
+  ```
+
+- spines and nonstrict evaluation
+
+  + data structures such as `list`, `sequence`, `tree` have _spine_ which a a
+    connective structure that bind the collection of values together
+
+    ```
+    -- [1, 2, 3]
+    -- or (1 : (2 : (3 : [])))
+    --     :
+    --    / \
+    --   1   :
+    --      / \
+    --     2   :
+    --        / \
+    --       3   []
+    ```
+
+  + evaluation will proceed down the spine but when a list is built, the
+    evaluation will proceed from bottom up, hence the name `lazy evaluation`?
+    because `haskell` evaluation is non-strict, the list  isn't constructed
+    until it's is consumed
+
+  + use `:sprint` to see what has already evaluated
+
+- continue...
+
 ## day \#5: 11/01/2017
 
 **what i have done?**
@@ -64,17 +211,24 @@ here is what i hope to gain through the challenge
 
 - `case..of..where` expression
 - `guards` is more like `if..then..else` expression
+- [differences between `pattern matching` and `guards`](http://bit.ly/2ifgMgu)
 - higher  order function is function that accept function as argument
 
   + function composition `(.)`: `f(x) . g(x) = f(g(x))`
   + function composition is right associative
   + function application has higher precedence than composition operator `(.)`
 
-- the combination of `(.)` and `($)` operators make `haskell` syntax look much
-  more beautiful, easier to read and _parentheses free_, help you focus on the
-  problem rather than the syntax
+- _haskell idiom_: the combination of `(.)` and `($)` operators make `haskell`
+  syntax look much more beautiful, easier to read and _parentheses free_, help
+  you focus on the problem rather than the syntax
 
-  + `a . b . c $ x` vs. (a (b (c x)))
+  ```haskell
+  -- function composition
+   a . b . c $ x
+
+  -- normal function with parentheses evade
+  (a (b (c x)))
+  ```
 
 ## day \#4: 10/01/2017
 
