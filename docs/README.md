@@ -41,6 +41,41 @@ here is what i hope to gain through the challenge
 
 # my logs
 
+## day \#7: 13/01/2017
+
+**what i have done?**
+
+- [x] going half way of chapter 9 of `haskell book`, some examples need to be
+  reviewed carefully in order to understand more about recursive implementation.
+
+- **note:** in the coming week, i'm gonna be so busy with works, that means the
+  challenge progress would be slowed down, but i do hope, that's not gonna
+  affect my goals.
+
+**lesson learned?**
+
+- list reducer with `fold`
+
+  ```haskell
+  -- foldr
+  foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
+  foldr f z xs =
+    case xs of
+      []     -> z
+      (x:xs) -> f x (foldr f z xs)
+
+  foldr (+) 0 [1, 2, 3]
+  -- 6
+  ```
+
+  + there are 2 stages when folding a list, _traversal_ and _folding_
+
+    _traversal_ is the stage which fold recursive over the _spine_
+    _folding_ refers to the evaluation of the folding function applied to  the
+    values
+    - one of the advantages of this is `foldr` can be used with _infinite_ list
+
+
 ## day \#6: 12/01/2017
 
 **what i have done?**
@@ -186,7 +221,55 @@ here is what i hope to gain through the challenge
 
   + use `:sprint` to see what has already evaluated
 
-- continue...
+- list transformation
+
+  + using `map`: can only be used with `[]`
+
+  ```haskell
+  -- map function
+  map :: (a -> b) -> [a] -> [b]
+  map _ []      = []
+  map f (x: xs) = f x : map f xs
+
+
+  map (+ 1) [1..3]
+  -- [2, 3, 4]
+  ```
+
+  + using `fmap`: is defined in `Functor` typeclass and could be applied onto
+  other datatypes as well
+
+  ```haskell
+  -- fmap
+  fmap :: Functor f => (a -> b) -> f a -> f b
+
+  fmap (+ 1) [1..3]
+  -- [2, 3, 4]
+  ```
+
+  + filter values
+
+  ```haskell
+  -- filter function
+  -- recursive function looks beautiful ^ ^
+  filter :: (a -> Bool) -> [a] -> [a]
+  filter _ [] = []
+  filter pred (x:xs)
+     | pred x = x : filter pred xs
+     | otherwise = filter pred xs
+
+  filter even [1..10]
+  -- [2, 4, 6, 8, 10]
+  ```
+
+  + zip values
+
+  ```haskell
+  zip :: [a] -> [b] -> [(a, b)]
+
+  zip [1, 2, 3] [1, 2, 3]
+  -- [(1, 1), (2, 2), (3, 3)]
+  ```
 
 ## day \#5: 11/01/2017
 
