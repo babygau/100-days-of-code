@@ -154,6 +154,41 @@
     -- bottom
     ```
 
+## day \#7: 13/01/2017
+
+**what i have done?**
+
+- [x] going half way of chapter 9 of `haskell book`, some examples need to be
+  reviewed carefully in order to understand more about recursive implementation.
+
+- **note:** in the coming week, i'm gonna be so busy with works, that means the
+  challenge progress would be slowed down, but i do hope, that's not gonna
+  affect my goals.
+
+**lesson learned?**
+
+- list reducer with `fold`
+
+  ```haskell
+  -- foldr
+  foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
+  foldr f z xs =
+    case xs of
+      []     -> z
+      (x:xs) -> f x (foldr f z xs)
+
+  foldr (+) 0 [1, 2, 3]
+  -- 6
+  ```
+
+  + there are 2 stages when folding a list, _traversal_ and _folding_
+
+    _traversal_ is the stage which fold recursive over the _spine_
+    _folding_ refers to the evaluation of the folding function applied to  the
+    values
+    - one of the advantages of this is `foldr` can be used with _infinite_ list
+
+
 ## day \#6: 12/01/2017
 
 **what i have done?**
