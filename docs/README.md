@@ -1,45 +1,107 @@
-# my goal
-
-a new year is just around the corner and it will be very significant to my life
-and my family. i'm feeling so excited yet intimidated to the challenges I set
-out in new year, and this **\#100daysofcode** is one of them that i want to
-complete.
-
-however, i also want to emphasis that i'm no way a professional developer, i'm
-doing this purefly because it's my passion. therefore, i'm not looking into
-doing something that could give you any **wow** or **awe** moment.
-
-here is what i hope to gain through the challenge
-
-- step \#1: build my first ever blog, up and running
-
-  i will use `hakyll` as a static blog generator. the reason will be explained
-  in next step
-
-  the ui will be pretty much a copy cat from default template, because i have
-  zero experience with `haskell` for now
-
-- step \#2: learning `haskell` through `haskell book`, i've been falling in love
-  with this book since day one i bought it but haven't managed the time to learn
-  it
-
-  by now you would know that i will start the challenge with `haskell` because
-  i'm so curious about functional programming language, about `monad` and
-  everything in between. this will also help me equip knowledge to learn about
-  `typescript` which is also a strong static typing language
-
-- step \#3: re-evaluate my blog
-
-  by the time i complete the book, i believe i will be confident enough to play
-  with `hakyll` in deep, yet it's time to dust of my outdate `css3` skill.
-
-  i will use `postcss` for my blog style
-
-- step \#4: start learning trio `typescript+react+redux` through `egghead.io`
-- step \#5 and final: build a website using everything i would have learned
-  through challenge
-
 # my logs
+
+## day \#8: 14/01/2017
+
+**what i have done?**
+
+- [x] reviewed previous chapters of `haskell book`, especially topic about _weak
+  head normal form_ and _normal form_
+- [x] watch egghead videos about improving website performance with `webpack 2`
+
+**lesson learned?**
+
+- in `haskell book`, the author defined _normal form_ and _weak head normal form
+  (whnf)_ as following:
+
+  > values in haskell get reduced to weak head normal form by default. by
+  > ‘normal form’ we mean that the expression is fully evaluated. ‘weak head
+  > normal form’ means the expression is only evaluated as far as is necessary
+  > to reach a data constructor
+
+  > _whnf_ is a larger set and contains both the possibility that the expression
+  > is fully evaluated (_normal form_) and the possibility that the expression
+  > has been evaluated to the point of arriving at a `data constructor` or
+  > `lambda` awaiting an argument
+
+  however, i found the explanation is quite difficult to make head or tail, the
+  following explanation by [hammer@stackoverflow](http://bit.ly/2invB0P) seem easier to understand
+
+  > _normal form_
+  >
+  > an expression in normal form is fully evaluated, and no sub-expression could be evaluated any further (i.e. it contains no un-evaluated thunks).
+  >
+  > these expressions are all in normal form:
+  >
+  > ```haskell
+  > 42
+  > (2, "hello")
+  > \x -> (x + 1)
+  > ```
+  >
+  > these expressions are not in normal form:
+  >
+  > ```haskell
+  > 1 + 2                 -- we could evaluate this to 3
+  > (\x -> x + 1) 2       -- we could apply the function
+  > "he" ++ "llo"         -- we could apply the (++)
+  > (1 + 1, 2 + 2)        -- we could evaluate 1 + 1 and 2 + 2
+  > ```
+  >
+  > _weak head normal form_
+  >
+  > an expression in weak head normal form has been evaluated to the outermost data constructor or lambda abstraction (the head). sub-expressions may or may not have been evaluated. therefore, every normal form expression is also in weak head normal form, though the opposite does not hold in general.
+  >
+  > to determine whether an expression is in weak head normal form, we only have to look at the outermost part of the expression. if it's a data constructor or a lambda, it's in weak head normal form. if it's a function application, it's not.
+  >
+  > these expressions are in weak head normal form:
+  >
+  > ```haskell
+  > (1 + 1, 2 + 2)       -- the outermost part is the data constructor (,)
+  > \x -> 2 + 2          -- the outermost part is a lambda abstraction
+  > 'h' : ("e" ++ "llo") -- the outermost part is the data constructor (:)
+  > ```
+  >
+  > as mentioned, all the normal form expressions listed above are also in weak head normal form.
+  >
+  > these expressions are not in weak head normal form:
+  >
+  > ```haskell
+  > 1 + 2                -- the outermost part here is an application of (+)
+  > (\x -> x + 1) 2      -- the outermost part is an application of (\x -> x + 1)
+  > "he" ++ "llo"        -- the outermost part is an application of (++)
+  > ```
+  > **stack overflows**
+  >
+  > evaluating an expression to weak head normal form may require that other
+  > expressions be evaluated to whnf first. for example, to evaluate 1 + (2 + 3)
+  > to _whnf_, we first have to evaluate  2 + 3. if evaluating a single
+  > expression leads to too many of these nested evaluations, the result is a stack overflow.
+  >
+  > this happens when you build up a large expression that does not produce any
+  > data constructors or lambdas until a large part of it has been evaluated.
+  > these are often caused by this kind of usage of foldl:
+  >
+  > ```haskell
+  > foldl (+) 0 [1, 2, 3, 4, 5, 6]
+  > = foldl (+) (0 + 1) [2, 3, 4, 5, 6]
+  > = foldl (+) ((0 + 1) + 2) [3, 4, 5, 6]
+  > = foldl (+) (((0 + 1) + 2) + 3) [4, 5, 6]
+  > = foldl (+) ((((0 + 1) + 2) + 3) + 4) [5, 6]
+  > = foldl (+) (((((0 + 1) + 2) + 3) + 4) + 5) [6]
+  > = foldl (+) ((((((0 + 1) + 2) + 3) + 4) + 5) + 6) []
+  > = (((((0 + 1) + 2) + 3) + 4) + 5) + 6
+  > = ((((1 + 2) + 3) + 4) + 5) + 6
+  > = (((3 + 3) + 4) + 5) + 6
+  > = ((6 + 4) + 5) + 6
+  > = (10 + 5) + 6
+  > = 15 + 6
+  > = 21
+  > ```
+  > notice how it has to go quite deep before it can get the expression into weak head normal form.
+  >
+  > you may wonder, why does not haskell reduce the inner expressions ahead of time? that is because of haskell's laziness. since it cannot be assumed in general that every subexpression will be needed, expressions are evaluated from the outside in.
+
+  to sum up: _whnf_ = _normal form_ \| λ(_normal form_) \| `data constructor`
 
 ## day \#7: 13/01/2017
 
@@ -54,7 +116,7 @@ here is what i hope to gain through the challenge
 
 **lesson learned?**
 
-- list reducer with `fold`
+- list reducer with `foldl`, `foldr`, `scan`
 
   ```haskell
   -- foldr
@@ -71,10 +133,26 @@ here is what i hope to gain through the challenge
   + there are 2 stages when folding a list, _traversal_ and _folding_
 
     _traversal_ is the stage which fold recursive over the _spine_
+
     _folding_ refers to the evaluation of the folding function applied to  the
     values
-    - one of the advantages of this is `foldr` can be used with _infinite_ list
 
+    give these two stages and _non-strict evaluation_, **if `f` doesn't evaluate
+    its second argument (_rest of the fold_), no more of spine will be forced**
+    one of the advantages of this is `foldr` can be used with _infinite_ list
+    because `foldr` can avoid evaluating not just some or all of values in the
+    list, but some or all of the list's _spine_ as well
+
+    ```haskell
+    -- this function work despite being an infinitelist
+    myAny even [1..]
+    -- True
+
+    -- this function will never finish evaluating (bottom or undefined) because it's always
+    -- an odd number
+    myAny even (repeat 1)
+    -- bottom
+    ```
 
 ## day \#6: 12/01/2017
 
@@ -474,3 +552,44 @@ here is what i hope to gain through the challenge
 
 - to tame `spacemacs` layout and workspace
 - to have the foundation of `haskell` lambda/function.
+
+# my goal
+
+a new year is just around the corner and it will be very significant to my life
+and my family. i'm feeling so excited yet intimidated to the challenges I set
+out in new year, and this **\#100daysofcode** is one of them that i want to
+complete.
+
+however, i also want to emphasis that i'm no way a professional developer, i'm
+doing this purefly because it's my passion. therefore, i'm not looking into
+doing something that could give you any **wow** or **awe** moment.
+
+here is what i hope to gain through the challenge
+
+- step \#1: build my first ever blog, up and running
+
+  i will use `hakyll` as a static blog generator. the reason will be explained
+  in next step
+
+  the ui will be pretty much a copy cat from default template, because i have
+  zero experience with `haskell` for now
+
+- step \#2: learning `haskell` through `haskell book`, i've been falling in love
+  with this book since day one i bought it but haven't managed the time to learn
+  it
+
+  by now you would know that i will start the challenge with `haskell` because
+  i'm so curious about functional programming language, about `monad` and
+  everything in between. this will also help me equip knowledge to learn about
+  `typescript` which is also a strong static typing language
+
+- step \#3: re-evaluate my blog
+
+  by the time i complete the book, i believe i will be confident enough to play
+  with `hakyll` in deep, yet it's time to dust of my outdate `css3` skill.
+
+  i will use `postcss` for my blog style
+
+- step \#4: start learning trio `typescript+react+redux` through `egghead.io`
+- step \#5 and final: build a website using everything i would have learned
+  through challenge
