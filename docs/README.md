@@ -1,5 +1,42 @@
 # my logs
 
+## day \#9: 15/01/2017
+
+**what i have done?**
+
+- [x] struggled with `foldl` and `foldr`
+
+**lesson learned?**
+
+- `foldr` is right associative, evaluate from _innermost_
+- `foldl` is left associative, evaluate from _outermost_
+- folding happens in two stages, traversal and folding, traversal is the stage
+  in which the fold recurses over the spine. folding refers to the evaluation or
+  reduction of the folding function applied to the values
+- while other programming language is strict evaluation, `haskell` is non-strict
+  evaluation by default
+- given two-stage process and non-strict evaluation, if `f` doesn't evaluate its
+  second argument (_rest of the fold_), **no more spine will be forced**, one of
+  the consequences of this is that `foldr` can avoid evaluating not just some or
+  all of the values in the list, but some or all of the list's spine as well. for
+  this reason, `foldr` can be used with lists that are potentially infinite
+- however, there is no guarantee that a fold of an infinite list will finish
+  evaluating even if you use `foldr`, **it often depends on the input data
+  (_bottom_ or _undefined_) and the fold function (_non-strict_)**
+- not all function are non-strict, while `take`, `const`... are non-strict, `(+)` is not
+- traversing the rest of spine doesn't occur **unless** the function asks for
+  the results of having folded the rest of the list. for example, `const` is
+  non-strict function, it doesn't care about the result of its second argument
+
+  ```haskell
+  const :: a -> b -> a
+  const x _ = x
+
+  foldr const 0 [1..5] -- 1
+  foldr const 0 [1, undefined] -- 1
+  foldr const 0 ([1, 2] ++ undefined) -- 1
+  ```
+
 ## day \#8: 14/01/2017
 
 **what i have done?**
@@ -103,6 +140,8 @@
 
   to sum up: _whnf_ = _normal form_ \| λ(_normal form_) \| `data constructor`
 
+  an expression is neither _normal form_ nor _whnf_ if it is a _fully applied function application_
+
 ## day \#7: 13/01/2017
 
 **what i have done?**
@@ -126,8 +165,18 @@
       []     -> z
       (x:xs) -> f x (foldr f z xs)
 
+  -- foldr
+  foldr :: (a -> b -> b) -> b -> [a] -> b
+  foldr f acc []     = acc
+  foldr f acc (x:xs) = f x (foldr f acc xs)
+
   foldr (+) 0 [1, 2, 3]
   -- 6
+
+  -- foldl
+  foldl :: (a -> b -> b) -> b -> [a] -> b
+  foldl f acc []     = acc
+  foldl f acc (x:xs) = foldl f (f acc x) xs
   ```
 
   + there are 2 stages when folding a list, _traversal_ and _folding_
